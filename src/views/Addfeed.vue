@@ -2,19 +2,19 @@
   <div class="addfeed">
     <h1>Create your feeds</h1>
     <form>
-      <div class="content">
-        <label for>使用者ID:{{feed.userId}}</label>
-        <br />
-        <label for>文章內容</label>
-        <br />
-        <input
-          class="feedcontent"
-          id="content"
-          name="content"
-          placeholder="請輸入文章內容..."
-        />
-      </div>
-      <button type="button" @click="addFeed">
+      <label for="userId">使用者ID:{{feed.userId}}</label>
+      <br />
+      <label for="content">文章內容:</label>
+      <br />
+      <input
+        class="feedcontent"
+        v-model="feed.content"
+        id="content"
+        name="content"
+        placeholder="請輸入文章內容..."
+      />
+
+      <button type="button" @click="createfeed">
         送出
         <i class="fa fa-video-camera" style="color: gray;"></i>
       </button>
@@ -39,34 +39,32 @@ export default {
   },
   created: function () {
     axios
-      .get("http://localhost:4000/api/feeds/add", this.feed, {
+      .get("http://localhost:4000/api/users/current", {
         headers: { Authorization: localStorage.getItem("jwtToken") },
       })
       .then((response) => {
         console.log(response);
-        this.feed.userId = response.data.userId;
-        this.feed.content = response.data.content;
+        this.feed.userId = response.data._id;
       });
   },
   methods: {
-    addFeed() {
+    createfeed() {
       axios
         .post("http://localhost:4000/api/feeds/add", this.feed, {
           headers: { Authorization: localStorage.getItem("jwtToken") },
         })
         .then((response) => {
           console.log(response);
-          this.feed.userId = response.data.userId;
-          this.feed.content = response.data.content;
-          alert("註冊成功");
+          alert("新增成功");
         });
     },
     test() {
-      alert(JSON.stringify(this.feed));
+      alert(JSON.stringify(this.user));
     },
   },
 };
 </script>
+
 
 <style lang="scss">
 .addfeed {

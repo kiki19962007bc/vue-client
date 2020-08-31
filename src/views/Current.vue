@@ -19,10 +19,10 @@ export default {
   data() {
     return {
       user: {
-        name: "chris",
-        age: "23",
-        email: "chris123@gmail.com",
-        password: "chris123",
+        name: "",
+        age: "",
+        email: "",
+        password: "",
       },
     };
   },
